@@ -1,5 +1,7 @@
 ## Qexo说说页面优化
 
+演示站:[Sunshine's blog](https://kuiyr.me/talks/)
+
 使用方法：
 在talks/index.md中写入代码
 ```
