@@ -1,0 +1,167 @@
+<style>
+
+/* 基础重置，确保内部元素盒模型统一 */
+#my-shouts-container *,
+#my-shouts-container *::before,
+#my-shouts-container *::after {
+  box-sizing: border-box;
+}
+
+/* --- 卡片阴影与悬浮特效 --- */
+
+#my-shouts-container .qexot-item {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+
+  /* 1. 默认状态下的阴影 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  /* 2. 平滑过渡效果的关键 */
+  /* 让 transform 和 box-shadow 属性的变化在 0.3 秒内平滑完成 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 3. 鼠标悬浮时的动效 */
+#my-shouts-container .qexot-item:hover {
+  /* 卡片向上平移 5 像素，产生“浮起”效果 */
+  transform: translateY(-5px);
+
+  /* 阴影变得更深、更广，增强立体感 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* 头部容器: 保持 flex 布局 */
+#my-shouts-container .qexot-header {
+  display: flex !important;
+  align-items: center !important; /* 垂直居中对齐所有项 */
+  margin-bottom: 16px;
+}
+
+/* --- 动态头像边框样式 --- */
+@keyframes pulseBorder {
+ 0% {
+  border-color: #007bff; /* 初始边框颜色 */
+  box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.5); /* 初始阴影大小 */
+ }
+ 70% {
+  border-color: #66a5ff; /* 中间边框颜色 */
+  box-shadow: 0 0 0 8px rgba(0, 123, 255, 0); /* 阴影扩大并消失 */
+ }
+ 100% {
+  border-color: #007bff; /* 最终边框颜色 */
+  box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); /* 阴影恢复 */
+ }
+}
+
+#my-shouts-container .qexot-avatar {
+ /* 保留原有的头像样式 */
+ width: 50px;
+ height: 50px;
+ border-radius: 50%;
+ object-fit: cover;
+ flex-shrink: 0;
+ margin: 0 12px 0 0 !important;
+
+ /* 添加动态边框 */
+ border: 2px solid #007bff; /* 初始边框 */
+ animation: pulseBorder 2s infinite alternate; /* 应用动画 */
+}
+
+/* 用户信息容器: 让内部元素垂直排列 */
+#my-shouts-container .qexot-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 用户名: 无需额外边距 */
+#my-shouts-container .qexot-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+  margin-right: 0; /* 必须移除大的边距 */
+}
+
+/* 时间: 无需额外边距 */
+#my-shouts-container .qexot-datatime {
+  font-size: 12px;
+  color: #999;
+  margin-top: 2px;
+}
+
+/* 内容区域 */
+#my-shouts-container .qexot-content {
+  font-size: 15px;
+  line-height: 1;
+  color: #383838;
+  white-space: pre-wrap; 
+  font-family: "Kaiti SC", KaiTi, "FangSong", "Apple LiSung", "STKaiti", cursive;
+}
+
+
+/* 标签的容器，让标签们靠右对齐 */
+#my-shouts-container .qexot-tags-container {
+  margin-left: auto; /* 将整个标签容器推到最右边 */
+  display: flex;
+  flex-wrap: wrap; /* 如果标签太多，允许换行 */
+  justify-content: flex-end; /* 让标签在容器内也靠右 */
+}
+
+/* 单个标签的样式 */
+#my-shouts-container .qexot-tag-item {
+  background-color: #f0f4ff;
+  color: #4a6dff;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-left: 6px; /* 标签之间的间距 */
+  margin-bottom: 4px; /* 标签换行时的垂直间距 */
+}
+
+
+#my-shouts-container .qexot-content .datacont {
+  clear: both; 
+}
+
+/* 图片样式 */
+#my-shouts-container .qexot-content img {
+  display: block;
+  max-width: 60%;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+/* 底部区域 (点赞按钮) */
+#my-shouts-container .qexot-bottom {
+  display: flex !important; /* 使用 !important 确保 flex 布局不被覆盖 */
+  justify-content: flex-end !important;
+  margin-top: 16px;
+}
+
+#my-shouts-container .qexot-like {
+  display: flex;
+  align-items: center;
+  color: #666;
+  cursor: pointer;
+}
+
+#my-shouts-container .qexot-like svg {
+  margin-right: 4px;
+}
+
+/* 加载更多按钮 */
+#my-shouts-container .qexot-more {
+  background-color: #f0f0f0;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  margin: 10px auto;
+  color: #555;
+}
+</style>
