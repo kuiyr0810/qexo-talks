@@ -16,7 +16,7 @@
         avatar: "https://img.kuiyr.de/file/1753932255231_image.png", // 你的头像
         name: "Sunshine.", // 你的名字
         limit: 10, // 加载几条
-        baseURL: "https://qexo.5200810.xyz" // 你的Qexo API地址
+        baseURL: "https://admin.example.com" // 你的Qexo API地址
     }).catch(function(error) {
         console.error("加载过程中出现问题:", error);
     });
