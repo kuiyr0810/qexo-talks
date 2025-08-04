@@ -83,7 +83,6 @@
       name: 'Qexo User', 
       avatar: '',      
       timeFormat: 'YYYY-mm-dd HH:MM:SS', 
-      ...userConfig
     };
     
     if (!this.config.el || !this.config.baseURL) {
