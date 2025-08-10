@@ -6,9 +6,7 @@ const myQexoShouts = {
   isLoading: false,
   config: {},
 
-  // 在 myQexoShouts 对象中找到并替换这个函数
   _formatTime: function(timestamp) {
-    // --- 新增的核心修正 ---
     // 检查时间戳是否是10位数（秒），如果是，则乘以1000转为毫秒
     const ts = timestamp.toString().length === 10 ? Number(timestamp) * 1000 : Number(timestamp);
     // ----------------------
@@ -38,18 +36,15 @@ const myQexoShouts = {
     }
   },
 
-  // --- Core Logic ---
-  // 在 myQexoShouts 对象中找到并替换这个函数
-  // 在 myQexoShouts 对象中找到并替换这个函数
+
   _createTalkItemHTML: function(talk) {
     const formattedTime = this._formatTime(talk.time);
     const isoTime = new Date(Number(talk.time)).toISOString();
     
-    // --- 新增的核心修正 ---
     // 使用 map 循环遍历标签数组，为每个标签生成一个独立的<a>标签
     const tagsHTML = talk.tags.map(tag => 
       `<a class="qexot-tag-item">#${tag}</a>`
-    ).join(''); // 使用 join('') 将所有标签的HTML代码连接起来
+    ).join(''); 
     // ----------------------
 
     const likedIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="red"><path transform="scale(0.03,0.03)" d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9L0 190.9z"/></svg>`;
@@ -102,8 +97,7 @@ const myQexoShouts = {
     this.loadMoreTalks();
   }
 };
-// To save space, the unchanged functions from v3.0 are omitted here, but they should be in your final talks.js file.
-// Please copy the full code block from the thought bubble if needed. I am pasting the full code again for clarity.
+
 myQexoShouts._render = function(items, append = false) {const container = document.querySelector(this.config.el);if (!container) return;const listContainer = container.querySelector('.qexot-list');if (!append && !listContainer) {container.innerHTML = `<section class="qexot"><div class="qexot-list"></div></section>`;}const targetList = container.querySelector('.qexot-list');const itemsHTML = items.map(talk => this._createTalkItemHTML(talk)).join('');targetList.insertAdjacentHTML('beforeend', itemsHTML);};
 myQexoShouts._updateLoadMoreButton = function(totalCount) {const container = document.querySelector(this.config.el);let moreButton = document.getElementById("qexot-more");if (moreButton) moreButton.remove();if (this.talks.length < totalCount) {const buttonHTML = `<center id="qexot-more"><div class="qexot-more" onclick="myQexoShouts.loadMoreTalks()">加载更多</div></center>`;container.insertAdjacentHTML('beforeend', buttonHTML);}};
 myQexoShouts.loadMoreTalks = async function() {if (this.isLoading) return;this.isLoading = true;const container = document.querySelector(this.config.el);const moreButton = document.getElementById("qexot-more");if (moreButton) moreButton.innerHTML = '加载中...';if (this.currentPage === 1) {container.innerHTML = '<div class="qexo_loading"><p style="text-align: center; display: block">说说加载中...</p></div>';}try {const url = new URL('/pub/talks/', this.config.baseURL);url.searchParams.append('page', this.currentPage);url.searchParams.append('limit', this.config.limit);const response = await fetch(url.href);if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);const res = await response.json();if (res.status) {this._render(res.data, this.currentPage > 1);this.talks = this.talks.concat(res.data);this._updateLoadMoreButton(res.count);this.currentPage++;} else {throw new Error(res.data.msg || "API returned an error.");}} catch (error) {console.error("Failed to fetch talks:", error);if (this.currentPage === 1) {container.innerHTML = '<blockquote>说说加载失败，请检查 API 地址或网络连接。<br>错误详情请查看 F12 控制台。</blockquote>';}} finally {this.isLoading = false;}};
