@@ -1,49 +1,38 @@
+// 创建一个简化的元素生成函数
+function createElement(tag, classNames = [], textContent = '') {
+    const element = document.createElement(tag);
+    if (classNames.length) element.className = classNames.join(' ');
+    if (textContent) element.textContent = textContent;
+    return element;
+}
 
- // 创建并添加元素
+// 创建并添加元素
 function createDengContainer() {
-    const container = document.createElement('div');
-    container.className = 'deng-container';
+    const container = createElement('div', ['deng-container']);
 
     // 从当前脚本的 URL 获取参数
     const scriptSrc = document.currentScript.src;
-    const urlParams = new URLSearchParams(scriptSrc.split('?')[1]); // 获取 '?'
-    const customText = urlParams.get('text'); // 获取参数名为'text'的值
-
-    // 将获取的文本分割为字符数组，如果没有提供文本，则使用默认的“新年快乐”
+    const urlParams = new URLSearchParams(scriptSrc.split('?')[1]);
+    const customText = urlParams.get('text');
     const texts = customText ? customText.split('') : ['新', '年', '快', '乐'];
 
     texts.forEach((text, index) => {
-        const box = document.createElement('div');
-        box.className = `deng-box deng-box${index + 1}`;
+        const box = createElement('div', ['deng-box', `deng-box${index + 1}`]);
 
-        const deng = document.createElement('div');
-        deng.className = 'deng';
-
-        const xian = document.createElement('div');
-        xian.className = 'xian';
-
-        const dengA = document.createElement('div');
-        dengA.className = 'deng-a';
-
-        const dengB = document.createElement('div');
-        dengB.className = 'deng-b';
-
-        const dengT = document.createElement('div');
-        dengT.className = 'deng-t';
-        dengT.textContent = text;
+        const deng = createElement('div', ['deng']);
+        const xian = createElement('div', ['xian']);
+        const dengA = createElement('div', ['deng-a']);
+        const dengB = createElement('div', ['deng-b']);
+        const dengT = createElement('div', ['deng-t'], text);
 
         dengB.appendChild(dengT);
         dengA.appendChild(dengB);
         deng.appendChild(xian);
         deng.appendChild(dengA);
 
-        const shuiA = document.createElement('div');
-        shuiA.className = 'shui shui-a';
-
-        const shuiC = document.createElement('div');
-        shuiC.className = 'shui-c';
-        const shuiB = document.createElement('div');
-        shuiB.className = 'shui-b';
+        const shuiA = createElement('div', ['shui', 'shui-a']);
+        const shuiC = createElement('div', ['shui-c']);
+        const shuiB = createElement('div', ['shui-b']);
 
         shuiA.appendChild(shuiC);
         shuiA.appendChild(shuiB);
