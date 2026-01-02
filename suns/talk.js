@@ -1,4 +1,22 @@
 
+const authorInfo = {
+        name: "Sunshine.",
+        blog: "https://kuiyr.de",
+        version: "v1.0.0",
+        github: "https://github.com/kuiyr0810"
+    };
+
+    const style1 = "background: #35495e; padding: 4px; border-radius: 3px 0 0 3px; color: #fff; font-weight: bold;";
+    const style2 = "background: #41b883; padding: 4px; border-radius: 0 3px 3px 0; color: #fff; font-weight: bold;";
+    const style3 = "color: #41b883; font-style: italic; text-decoration: underline;";
+
+    console.log(
+        `%c Snow %c ${authorInfo.version} `, 
+        style1, style2, 
+        `特效已加载。作者: ${authorInfo.name}`
+    );
+    console.log(`%c项目主页: %c${authorInfo.blog}`, "color: #666;", style3);
+
 const myQexoShouts = {
   // --- Internal State ---
   talks: [],
