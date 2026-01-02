@@ -6,18 +6,6 @@
         github: "https://github.com/kuiyr0810"
     };
 
-    const style1 = "background: #35495e; padding: 4px; border-radius: 3px 0 0 3px; color: #fff; font-weight: bold;";
-    const style2 = "background: #41b883; padding: 4px; border-radius: 0 3px 3px 0; color: #fff; font-weight: bold;";
-    const style3 = "color: #41b883; font-style: italic; text-decoration: underline;";
-
-    console.log(
-        `%c Snow %c ${authorInfo.version} `, 
-        style1, style2, 
-        `特效已加载。作者: ${authorInfo.name}`
-    );
-    console.log(`%c项目主页: %c${authorInfo.blog}`, "color: #666;", style3);
-    
-    
     function createElement(tag, classNames = [], textContent = '') {
         const element = document.createElement(tag);
         if (classNames.length) element.className = classNames.join(' ');
@@ -25,7 +13,6 @@
         return element;
     }
 
-    // CSS 样式
     function addStyles() {
         if (document.getElementById('deng-style')) return;
         const style = document.createElement('style');
@@ -33,12 +20,31 @@
         style.type = 'text/css';
         style.textContent = `
             .deng-container {
-                position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;
-                pointer-events: none; display: flex; justify-content: space-between;
-                padding: 0 40px; box-sizing: border-box;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 9999;
+                pointer-events: none;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 40px; 
+                box-sizing: border-box;
             }
-            .deng-side-box { display: flex; gap: 15px; }
-            .deng-box { position: relative; width: 120px; }
+            
+            .deng-side-box {
+                display: flex;
+                gap: 15px;
+            }
+
+            .deng-box {
+                position: relative;
+                width: 120px;
+               
+                pointer-events: auto; 
+            }
+
+            
             .deng {
                 position: relative; width: 120px; height: 90px; margin: 50px 0;
                 background: rgba(216, 0, 15, .8); border-radius: 50% 50%;
@@ -55,11 +61,24 @@
             .deng:before { top: -7px; left: 29px; height: 12px; width: 60px; z-index: 999; }
             .deng:after { bottom: -7px; left: 10px; height: 12px; width: 60px; margin-left: 20px; }
             .deng-t { font-family: '华文行楷', 'STXingkai', 'Microsoft YaHei', sans-serif; font-size: 3.2rem; color: #dc8f03; font-weight: 700; line-height: 85px; text-align: center; }
+
+            /* --- 手机端强力适配 --- */
             @media (max-width: 768px) {
-                .deng-container { padding: 0 10px; }
-                .deng-box { transform: scale(0.5); transform-origin: top center; margin-top: -20px; }
-                .deng-side-box { gap: 0; }
+                .deng-container {
+                    padding: 0 8px; 
+                    top: -10px;  
+                }
+                .deng-side-box {
+                    gap: 0px;    
+                }
+                .deng-box {
+                    transform: scale(0.45); 
+                    margin-left: -32px; 
+                    margin-right: -32px;
+                    margin-top: -20px; 
+                }
             }
+
             @keyframes swing {
                 0% { transform: rotate(-10deg); }
                 50% { transform: rotate(10deg); }
@@ -69,19 +88,23 @@
         document.head.appendChild(style);
     }
 
-    // 初始化灯笼
+    // 3. 初始化逻辑
     function init() {
         addStyles();
         const container = createElement('div', ['deng-container']);
         const leftSide = createElement('div', ['deng-side-box']);
         const rightSide = createElement('div', ['deng-side-box']);
 
-        // 获取当前 script 标签上的 text 参数
+        // 解析参数
         const scripts = document.getElementsByTagName('script');
         const currentScript = scripts[scripts.length - 1];
-        const urlParams = new URLSearchParams(currentScript.src.split('?')[1]);
-        const customText = urlParams.get('text') || '新年快乐';
-        const texts = customText.split('');
+        let texts = ['新', '年', '快', '乐']; // 默认值
+        
+        if (currentScript.src.includes('?')) {
+            const urlParams = new URLSearchParams(currentScript.src.split('?')[1]);
+            const customText = urlParams.get('text');
+            if (customText) texts = customText.split('');
+        }
 
         texts.forEach((text, index) => {
             const box = createElement('div', ['deng-box']);
@@ -105,7 +128,7 @@
             deng.appendChild(shuiA);
             box.appendChild(deng);
 
-            // 动态分配：文字的一半在左，一半在右
+            // 智能分组
             if (index < Math.ceil(texts.length / 2)) {
                 leftSide.appendChild(box);
             } else {
@@ -118,7 +141,6 @@
         document.body.appendChild(container);
     }
 
-    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
