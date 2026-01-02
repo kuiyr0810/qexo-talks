@@ -1,5 +1,23 @@
 (function() {
-    // 辅助函数：创建元素
+    const authorInfo = {
+        name: "Sunshine.",
+        blog: "https://kuiyr.de",
+        version: "v1.0.0",
+        github: "https://github.com/kuiyr0810"
+    };
+
+    const style1 = "background: #35495e; padding: 4px; border-radius: 3px 0 0 3px; color: #fff; font-weight: bold;";
+    const style2 = "background: #41b883; padding: 4px; border-radius: 0 3px 3px 0; color: #fff; font-weight: bold;";
+    const style3 = "color: #41b883; font-style: italic; text-decoration: underline;";
+
+    console.log(
+        `%c Snow %c ${authorInfo.version} `, 
+        style1, style2, 
+        `特效已加载。作者: ${authorInfo.name}`
+    );
+    console.log(`%c项目主页: %c${authorInfo.blog}`, "color: #666;", style3);
+    
+    
     function createElement(tag, classNames = [], textContent = '') {
         const element = document.createElement(tag);
         if (classNames.length) element.className = classNames.join(' ');
@@ -7,9 +25,9 @@
         return element;
     }
 
-    // 添加 CSS 样式
+    // CSS 样式
     function addStyles() {
-        if (document.getElementById('deng-style')) return; // 防止重复添加
+        if (document.getElementById('deng-style')) return;
         const style = document.createElement('style');
         style.id = 'deng-style';
         style.type = 'text/css';
@@ -100,7 +118,7 @@
         document.body.appendChild(container);
     }
 
-    // 确保 DOM 加载完成后再执行
+    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
