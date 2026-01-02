@@ -1,0 +1,83 @@
+(function() {
+    class SnowflakeAPI {
+        constructor(options = {}) {
+            this.options = {
+                count: options.count || 100,
+                minSize: options.minSize || 1,
+                maxSize: options.maxSize || 4,
+                minSpeed: options.minSpeed || 0.5,
+                maxSpeed: options.maxSpeed || 2.5,
+                color: options.color || '#FFF'
+            };
+            this.canvas = null;
+            this.ctx = null;
+            this.snowflakes = [];
+            this._init();
+        }
+
+        _init() {
+            this.canvas = document.createElement('canvas');
+            this.ctx = this.canvas.getContext('2d');
+            Object.assign(this.canvas.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                zIndex: '1000'
+            });
+            document.body.appendChild(this.canvas);
+            this._resize();
+            window.addEventListener('resize', () => this._resize());
+
+            for (let i = 0; i < this.options.count; i++) {
+                this.snowflakes.push(this._createSnowflake());
+            }
+            this._animate();
+        }
+
+        _createSnowflake() {
+            return {
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                r: Math.random() * (this.options.maxSize - this.options.minSize) + this.options.minSize,
+                speed: Math.random() * (this.options.maxSpeed - this.options.minSpeed) + this.options.minSpeed,
+                wind: Math.random() * 0.5 - 0.25,
+                opacity: Math.random() * 0.5 + 0.3
+            };
+        }
+
+        _resize() {
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+        }
+
+        _animate() {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.snowflakes.forEach(s => {
+                this.ctx.beginPath();
+                this.ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                this.ctx.fillStyle = this.options.color;
+                this.ctx.globalAlpha = s.opacity;
+                this.ctx.fill();
+
+                s.y += s.speed;
+                s.x += s.wind;
+
+                if (s.y > this.canvas.height) {
+                    s.y = -10;
+                    s.x = Math.random() * this.canvas.width;
+                }
+            });
+            requestAnimationFrame(() => this._animate());
+        }
+    }
+
+    // 自动初始化：当 DOM 加载完成后自动运行
+    if (document.readyState === 'complete') {
+        new SnowflakeAPI();
+    } else {
+        window.addEventListener('load', () => new SnowflakeAPI());
+    }
+})();
