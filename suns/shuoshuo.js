@@ -1,31 +1,11 @@
-/*
- * talk.js
- *
- * 直接可用的 Qexo 叨叨前端渲染脚本。
- * 根据 qexo-dao.decoded.js 还原并优化：不依赖 Vue / axios，直接用原生 JS + fetch。
- *
- * 基本用法：
- *   <div id="ispeak"></div>
- *   <script src="/path/to/talk.js"></script>
- *   <script>
- *     myQexoShouts.init({
- *       el: '#ispeak',
- *       baseURL: 'https://your-qexo.example.com/',
- *       title: '叨叨',
- *       name: '你的名字',
- *       avatar: 'https://example.com/avatar.png',
- *       limit: 5
- *     });
- *   </script>
- */
 
 (function (window, document) {
   'use strict';
 
   const PACKAGE = {
-    name: 'qexo-daodao',
-    version: '1.0.2',
-    warehouse: 'https://github.com/Uyoahz26/daodao',
+    name: 'qexo-sunshine',
+    version: '1.0.0',
+    warehouse: 'https://github.com/kuiyr0810/qexo-talks',
   };
 
   const DEFAULT_LOADING_IMG = 'https://img.5200810.xyz/file/vip/1780824012256_Loading.gif';
