@@ -30,7 +30,7 @@
       this.config = {
         el: '#ispeak',
         baseURL: '',
-        title: 'Sunshine',
+        title: '碎碎念',
         name: 'Qexo User',
         avatar: '',
         limit: 5,
